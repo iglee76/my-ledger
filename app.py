@@ -93,6 +93,18 @@ st.markdown("""
     [data-testid="InputInstructions"] {
         display: none;
     }
+
+    /* [핵심 수정] 모바일에서도 컬럼 강제 가로 정렬 */
+    [data-testid="column"] {
+        display: flex !important;
+        flex-direction: column !important;
+        min-width: 0px !important; /* 좁아도 줄바꿈 금지 */
+    }
+    
+    /* 컬럼을 감싸는 부모 컨테이너가 줄바꿈 하지 않도록 설정 */
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: nowrap !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -228,7 +240,6 @@ st.markdown("""
 current_month_name = f"{datetime.now().month}월"
 income, expense, saving, invest = load_dashboard_data(current_month_name)
 
-# [수정] 현황판 항목 앞에 아이콘 추가
 st.markdown(f"""
     <div class="dashboard-container">
         <div class="dashboard-grid">
@@ -256,7 +267,7 @@ st.markdown(f"""
 current_key = st.session_state.form_key
 
 with st.container(border=True):
-    # 1행
+    # 1행: 비율 [1.2, 1, 1.8]
     c1, c2, c3 = st.columns([1.2, 1, 1.8]) 
     
     with c1:
